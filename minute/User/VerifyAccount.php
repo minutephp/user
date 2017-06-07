@@ -4,6 +4,7 @@
  * Date: 10/11/2016
  * Time: 7:03 AM
  */
+
 namespace Minute\User {
 
     use Minute\Auth\VerificationCode;
@@ -36,7 +37,7 @@ namespace Minute\User {
             $user = $event->getUser();
             $data = $user->attributesToArray();
 
-            if ($data['verified'] === 'false') {
+            if (!empty($user->email) && ($data['verified'] === 'false')) {
                 $code = $this->verifier->getVerificationCode($user->user_id);
                 $event->setUserData(array_merge($data, ['code' => $code, 'reference' => "V$code"]));
                 $event->setData('user_account_verify');

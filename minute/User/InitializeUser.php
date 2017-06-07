@@ -4,6 +4,7 @@
  * Date: 1/17/2017
  * Time: 7:06 PM
  */
+
 namespace Minute\User {
 
     use App\Model\MUserGroup;
@@ -35,7 +36,7 @@ namespace Minute\User {
         public function assignDefaultGroup(UserSignupEvent $event) {
             $user_id = $event->getUserId();
             $groups  = $this->userInfo->getUserGroups($user_id);
-            $default = $this->config->get('private/default_user_group');
+            $default = $this->config->get('private/default_user_group', 'trial');
 
             if (empty($groups)) { //skip if user has already been assigned to some group by some other handler
                 MUserGroup::unguard();
